@@ -400,9 +400,8 @@ class Audio:
 
         else:
             try:
-                data, _ = torchaudio.load(
-                    file["audio"], frame_offset=start_frame, num_frames=num_frames
-                )
+                file["waveform"], file["sample_rate"] = torchaudio.load(file["audio"])
+                data = file["waveform"][:, start_frame:end_frame]
                 # rewind if needed
                 if isinstance(file["audio"], IOBase):
                     file["audio"].seek(0)
